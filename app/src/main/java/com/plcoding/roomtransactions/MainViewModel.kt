@@ -18,18 +18,15 @@ class MainViewModel @Inject constructor(
                 description = "My event",
                 timestamp = System.currentTimeMillis()
             )
-            val eventId = db.eventDao().insertEvent(event)
-
             val attendees = (1..10).map {
                 Attendee(
-                    eventId = eventId,
+                    eventId = 0,
                     name = "Test attendee$it",
                     profilePictureUrl = null
                 )
             }
-            attendees.forEach {
-                db.attendeeDao().insertAttendee(it)
-            }
+
+            db.eventDao().insertEventWithAttendees(event, attendees)
         }
     }
 }
